@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="420"
+        x:Class="ContactsApp.Avalonia.View.Views.AddContactView"
+		Width="400"
+		Height="410"
+		Title="Добавить контакт"
+		Icon="avares://ContactsApp.Avalonia.View/Assets/Icons/ContactsApp_96x96.ico"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+		<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+			<StackPanel Grid.Column="1"
+						Grid.Row="0"
+						Margin="6"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center">
+				<Button Classes="AddImage">
+					<Image Classes="AddContactImage"
+					   Source="avares://ContactsApp.Avalonia.View/Assets/Icons/add_photo_32x32_gray.png"/>
+				</Button>
+			</StackPanel>
+			<StackPanel Grid.Column="0"
+						Grid.Row="0">
+				<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
+				<TextBox x:DataType="vm:AddContactViewModel"
+						 Text="{Binding FullName}"/>
+				<TextBlock Classes="ContactInfo" Text="E-mail:"/>
+				<TextBox x:DataType="vm:AddContactViewModel"
+						 Text="{Binding Email}"/>
+				<TextBlock Classes="ContactInfo" Text="Номер телефона"/>
+				<TextBox x:DataType="vm:AddContactViewModel"
+						 Text="{Binding Phone}"/>
+				<TextBlock Classes="ContactInfo" Text="Дата рождения"/>
+				<DatePicker x:DataType="vm:AddContactViewModel"
+							SelectedDate="{Binding DateOfBirth}"
+							Margin="6"
+					        BorderThickness="1"/>
+				<TextBlock Classes="ContactInfo" Text="ВК:"/>
+				<TextBox x:DataType="vm:AddContactViewModel"
+						 Text="{Binding IdVk}"/>
+			</StackPanel>
+			<Grid Grid.Row="1"
+				  Grid.Column="0"
+				  Grid.ColumnSpan="2"
+				  ColumnDefinitions="*,*">
+				<Button Grid.Column="0"
+						x:Name="AddContactButton"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Content="Добавить"/>
+				<Button Grid.Column="1"
+						x:Name="CancelButton"
+						Click="CancelButton_Click"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Content="Отмена"/>
+			</Grid>
+		</Grid>
+</Window>

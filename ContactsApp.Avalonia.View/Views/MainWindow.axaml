@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:ContactsApp.Avalonia.View.Views"
+		xmlns:m="using:ContactsApp.Model"
+        mc:Ignorable="d" d:DesignWidth="890" d:DesignHeight="590"
+		Height="590"
+		Width="890"
+		MinHeight="300"
+		MinWidth="600"
+		Icon="avares://ContactsApp.Avalonia.View/Assets/Icons/ContactsApp_96x96.ico"
+        x:Class="ContactsApp.Avalonia.View.Views.MainWindow"
+        Title="ContactsAppAvalonia"
+		WindowStartupLocation="CenterOwner"
+		ExtendClientAreaToDecorationsHint="False">
+	<Grid ColumnDefinitions="300,*">
+		<Button x:Name="AboutWindowButton" IsVisible="False"/>
+		<views:ContactsListView Grid.Column="0"/>
+		<views:ContactInfoView Grid.Column="1"/>
+	</Grid>
+</Window>

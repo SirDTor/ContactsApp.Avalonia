@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="590" d:DesignHeight="590"
+			 xmlns:m="using:ContactsApp.Model"
+			 xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
+             x:Class="ContactsApp.Avalonia.View.Views.ContactInfoView">
+	<Grid ColumnDefinitions="Auto,*">
+		<Border Grid.Column="0"
+				Classes="Image"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Top">
+			<Image Classes="ContactImage" Source="avares://ContactsApp.Avalonia.View/Assets/1.jpg"/>
+		</Border>
+		<StackPanel Grid.Column="1">
+			<Grid RowDefinitions="*,*,*,*,*">
+				<StackPanel Grid.Row="0">
+					<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
+					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.FullName}"
+							 IsReadOnly="True"/>
+				</StackPanel>
+				<StackPanel Grid.Row="1">
+					<TextBlock Classes="ContactInfo" Text="E-mail:"/>
+					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Email}"
+							 IsReadOnly="True"/>
+				</StackPanel>
+				<StackPanel Grid.Row="2">
+					<TextBlock Classes="ContactInfo" Text="Номер телефона:"/>
+					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Phone}"
+							 IsReadOnly="True"/>
+				</StackPanel>
+				<StackPanel Grid.Row="3">
+					<TextBlock Classes="ContactInfo" Text="Дата рождения:"/>
+					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.DateOfBirth}"
+							 IsReadOnly="True"/>
+				</StackPanel>
+				<StackPanel Grid.Row="4">
+					<TextBlock Classes="ContactInfo" Text="ВК:"/>
+					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.IdVk}"
+							 IsReadOnly="True"/>
+				</StackPanel>
+			</Grid>
+		</StackPanel>
+	</Grid>
+</UserControl>

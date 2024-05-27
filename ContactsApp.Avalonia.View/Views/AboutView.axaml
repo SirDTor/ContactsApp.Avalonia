@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
+		x:DataType="vm:AboutViewModel"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+		Width="670"
+		Height="600"
+        x:Class="ContactsApp.Avalonia.View.Views.AboutView"
+		Icon="avares://ContactsApp.Avalonia.View/Assets/Icons/ContactsApp_96x96.ico"
+        Title="О программе">
+	<Panel>
+		<StackPanel>
+			<TextBlock Text="ContactsAppAvalonia" Margin="12,36,0,0" FontSize="36"/>
+			<TextBlock Text="v1.0.0" Margin="12,0,0,24" FontSize="16"/>
+			<Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,*">
+				<TextBlock Grid.Row="0" Grid.Column="0" Text="Author:" Margin="12,0,0,12"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Text="E-mail:" Margin="12,0,0,12"/>
+				<TextBlock Grid.Row="2" Grid.Column="0" Text="Github:" Margin="12,0,0,12"/>
+				<TextBlock Grid.Row="0" Grid.Column="1" Text="Zorin Daniil" Margin="24,0,0,12"/>
+				<TextBlock Grid.Row="1" Grid.Column="1" Text="daniil.zorin.leon@gmail.com" Margin="24,0,0,12"/>
+				<TextBlock Grid.Row="2" Grid.Column="1" Text="github.com/SirDTor" Margin="24,0,0,12"/>
+			</Grid>
+			<TextBox IsReadOnly="True" Text="{Binding Rule}" Margin="12,0,12,12"/>
+		</StackPanel>
+	</Panel>
+</Window>

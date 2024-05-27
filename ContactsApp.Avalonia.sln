@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.Avalonia.View", "ContactsApp.Avalonia.View\ContactsApp.Avalonia.View.csproj", "{2802A1C7-9514-4472-8597-6E2DFEBACFD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.Avalonia.View.Desktop", "ContactsApp.Avalonia.View.Desktop\ContactsApp.Avalonia.View.Desktop.csproj", "{597B374A-E734-4650-8226-549782418E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Avalonia.Model", "ContactsApp.Avalonia.Model\ContactsApp.Avalonia.Model.csproj", "{D104CFF5-F323-4A85-9228-926F95AA063E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2802A1C7-9514-4472-8597-6E2DFEBACFD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2802A1C7-9514-4472-8597-6E2DFEBACFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2802A1C7-9514-4472-8597-6E2DFEBACFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2802A1C7-9514-4472-8597-6E2DFEBACFD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597B374A-E734-4650-8226-549782418E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597B374A-E734-4650-8226-549782418E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597B374A-E734-4650-8226-549782418E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597B374A-E734-4650-8226-549782418E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D104CFF5-F323-4A85-9228-926F95AA063E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D104CFF5-F323-4A85-9228-926F95AA063E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D104CFF5-F323-4A85-9228-926F95AA063E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D104CFF5-F323-4A85-9228-926F95AA063E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {474F5435-D47D-404A-94C1-5657FFEA1CC5}
+	EndGlobalSection
+EndGlobal
