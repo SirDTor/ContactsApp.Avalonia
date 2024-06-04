@@ -29,7 +29,7 @@ namespace ContactsApp.Model
         /// <summary>
         /// Поле хранящее путь до файла и его название
         /// </summary>
-        public static string FileName = DirectoryName + @"\userdata1.json";
+        public static string FileName = DirectoryName + @"\userdataAvalonia.json";
 
         /// <summary>
         /// Метод реализующий сохранение данных в json файл

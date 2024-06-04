@@ -11,7 +11,8 @@
 				Classes="Image"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Top">
-			<Image Classes="ContactImage" Source="avares://ContactsApp.Avalonia.View/Assets/1.jpg"/>
+			<Image Classes="ContactImage" x:DataType="vm:MainViewModel" 
+				   Source="{Binding CurrentContact.ContactImage}"/>
 		</Border>
 		<StackPanel Grid.Column="1">
 			<Grid RowDefinitions="*,*,*,*,*">

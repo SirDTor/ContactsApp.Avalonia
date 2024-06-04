@@ -1,4 +1,8 @@
 ﻿using ContactsApp.Model;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using DynamicData;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI;
@@ -13,6 +17,8 @@ using System.Reactive.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.IO;
+using Avalonia;
 
 namespace ContactsApp.Avalonia.View.ViewModels
 {
@@ -53,15 +59,17 @@ namespace ContactsApp.Avalonia.View.ViewModels
         private const string _phoneNumberValidationMask =
                     @"^((\+7|7|8)[[\(]?(\d{3})[\)]?]?\d{3}[[-]?(\d{2}[-]?]?\d{2}))$";
 
-        /// <summary>
-        /// Команда ОК
-        /// </summary>
-        public ReactiveCommand<Unit, Contact> AddContactCommand { get; }
+        private IStorageFile _imagePath;
 
-        public Contact Contact { get; set; } = new Contact();
+        private Bitmap _contactImage;
 
         public AddContactViewModel()
         {
+            var canAddContact = this.WhenAnyValue(x => x.FullName, x => x.Phone,
+                (fullname, phone) =>
+                !string.IsNullOrWhiteSpace(fullname) &&
+                !string.IsNullOrWhiteSpace(phone))
+                .DistinctUntilChanged();
             AddContactCommand = ReactiveCommand.Create(() =>
             {
                 Contact.FullName = FullName;
@@ -69,12 +77,21 @@ namespace ContactsApp.Avalonia.View.ViewModels
                 Contact.Phone = Phone;
                 Contact.DateOfBirth = new DateOnly(DateOfBirth.Year, DateOfBirth.Month, DateOfBirth.Day);
                 Contact.IdVk = IdVk;
+                Contact.ContactImage = ContactImage;
                 return Contact;
+            }, canAddContact);
+            OpenContactImageCommand = ReactiveCommand.Create(async () =>
+            {
+                ImagePath = await GetPath();
+                if (ImagePath is null) return;
+                var bitmap = new Bitmap(ImagePath.Path.AbsolutePath);
+                ContactImage = bitmap;
             });
         }
 
         [Reactive]
         [MaxLength(100)]
+        [Required]
         /// <summary>
         /// Возвращает или задает полное имя контакта
         /// </summary>
@@ -86,17 +103,8 @@ namespace ContactsApp.Avalonia.View.ViewModels
             }
             set
             {
-                if (value.Length >= 100)
-                {
-                    throw new ArgumentException($"Name:\n->Contact name must be less than 100, " +
-                        $"value = {value.Length}\n");
-                }
-                else
-                {
-                    TextInfo toUpperTextInfo = CultureInfo.CurrentCulture.TextInfo;
-                    //_fullName = toUpperTextInfo.ToTitleCase(value).ToString();
-                    this.RaiseAndSetIfChanged(ref _fullName, toUpperTextInfo.ToTitleCase(value).ToString());
-                }
+                TextInfo toUpperTextInfo = CultureInfo.CurrentCulture.TextInfo;
+                this.RaiseAndSetIfChanged(ref _fullName, toUpperTextInfo.ToTitleCase(value).ToString());
             }
         }
 
@@ -113,17 +121,13 @@ namespace ContactsApp.Avalonia.View.ViewModels
             }
             set
             {
-                if (value.Length >= 100)
-                {
-                    throw new ArgumentException($"Email:\n->Contact email must be less than 100," +
-                        $" value = {value.Length}\n");
-                }
                 this.RaiseAndSetIfChanged(ref _email, value);
             }
         }
 
         [Reactive]
         [Phone]
+        [Required]
         /// <summary>
         /// Возвращает или задает номер телефона контакта
         /// </summary>
@@ -147,6 +151,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
         }
 
         [Reactive]
+        [Required]
         /// <summary>
         /// Возвращает или задает дату рождения контакта
         /// </summary>
@@ -181,13 +186,62 @@ namespace ContactsApp.Avalonia.View.ViewModels
             }
             set
             {
-                if (value.Length >= 50)
-                {
-                    throw new ArgumentException($"IdVK:\n->Contact ID must be less than 50, " +
-                        $"value = {value.Length}\n");
-                }
                 this.RaiseAndSetIfChanged(ref _idVk, value);
             }
+        }
+
+        /// <summary>
+        /// Команда ОК
+        /// </summary>
+        public ReactiveCommand<Unit, Contact> AddContactCommand { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReactiveCommand<Unit,Task> OpenContactImageCommand { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Contact Contact { get; set; } = new Contact();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Bitmap ContactImage { get => _contactImage; set=> this.RaiseAndSetIfChanged(ref _contactImage, value); }
+
+        [Reactive]
+        public IStorageFile ImagePath { get; set; }
+
+        public async Task<IStorageFile> GetPath()
+        {
+            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+                throw new NullReferenceException("Missing StorageProvider instance.");
+            // Start async operation to open the dialog.
+            var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Open Contact Image",
+                AllowMultiple = false,
+                FileTypeFilter = new FilePickerFileType[]
+                {
+                    new("Image")
+                    {
+                        Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp" },
+                        AppleUniformTypeIdentifiers = new[] { "public.image" } ,
+                        MimeTypes = new[] { "image/*" }
+                    }
+                }
+            });
+            if (files.Count >= 1)
+            {
+                // Open reading stream from the first file.
+                await using var stream = await files[0].OpenReadAsync();
+                using var streamReader = new StreamReader(stream);
+                // Reads all the content of file as a text.
+                var fileContent = await streamReader.ReadToEndAsync();
+            }
+            return files?.Count >= 1 ? files[0] : null;
         }
     }
 }

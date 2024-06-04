@@ -79,16 +79,19 @@ public class MainViewModel : ViewModelBase
             var contact = await AddContactWindow.Handle(new AddContactViewModel());
             if (contact != null)
             {
-                if(contact.FullName != "" || contact.FullName != null)
+                if (contact.FullName != "" || contact.FullName != null)
                 {
                     Contacts.Add(contact);
-                }                
-            }                
+                }
+            }
         });
         GenerateRandomContactsCommand = ReactiveCommand.Create(GenerateRandomContacts);
         Project = ProjectSerializer.LoadFromFile();
-        Contacts.AddRange(Project.Contacts);
-        SelectedContact = Contacts.First();
+        if (Project.Contacts.Count != 0)
+        {
+            Contacts.AddRange(Project.Contacts);
+            SelectedContact = Contacts.First();
+        }
         this.WhenAnyValue(x => x.SelectedContact)
             .Subscribe(UpdateContactInfo!);
     }
@@ -109,6 +112,7 @@ public class MainViewModel : ViewModelBase
             CurrentContact.Phone = contact.Phone;
             CurrentContact.DateOfBirth = contact.DateOfBirth;
             CurrentContact.IdVk = contact.IdVk;
+            CurrentContact.ContactImage = contact.ContactImage;
         }
     }
 

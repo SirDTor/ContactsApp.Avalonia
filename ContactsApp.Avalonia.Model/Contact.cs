@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
+using Avalonia.Media.Imaging;
 
 namespace ContactsApp.Model
 {
@@ -44,6 +45,8 @@ namespace ContactsApp.Model
         /// </summary>
         private const string _phoneNumberValidationMask =
                     @"^((\+7|7|8)[[\(]?(\d{3})[\)]?]?\d{3}[[-]?(\d{2}[-]?]?\d{2}))$";
+
+        private Bitmap _contactImage;
 
         [DataMember]
         [Reactive]
@@ -162,6 +165,13 @@ namespace ContactsApp.Model
                 _idVk = value;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Reactive]
+        [DataMember]
+        public Bitmap ContactImage { get; set; }
 
         /// <summary>
         /// Создает экземпляр <see cref="Contact">
