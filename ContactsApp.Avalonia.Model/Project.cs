@@ -27,10 +27,11 @@ namespace ContactsApp.Model
         /// </summary>
         /// <param name="contacts"></param>
         /// <returns></returns>
-        public List<Contact> SortContactsByFullName(List<Contact> contacts)
+        public void SortContactsByFullName(ObservableCollection<Contact> contacts)
         {
-            var orderByContact = contacts.OrderBy(contact => contact.FullName).ToList();
-            return orderByContact;
+            var orderByContact =new ObservableCollection<Contact>(contacts.OrderBy(contact => contact.FullName));
+            Contacts = orderByContact;
+            //return orderByContact;
         }
 
         /// <summary>
@@ -38,10 +39,10 @@ namespace ContactsApp.Model
         /// </summary>
         /// <param name="contacts"></param>
         /// <returns></returns>
-        public List<Contact> FindBirthdayContacts(List<Contact> contacts)
+        public ObservableCollection<Contact> FindBirthdayContacts(ObservableCollection<Contact> contacts)
         {
-            var birthdayContacts = contacts.Where(contact => contact.DateOfBirth.Day == DateTime.Today.Day
-            && contact.DateOfBirth.Month == DateTime.Today.Month).ToList();
+            var birthdayContacts = (ObservableCollection<Contact>)contacts.Where(contact => contact.DateOfBirth.Day == DateTime.Today.Day
+            && contact.DateOfBirth.Month == DateTime.Today.Month);
             return birthdayContacts;
         }
 
@@ -51,11 +52,11 @@ namespace ContactsApp.Model
         /// <param name="contacts"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public List<Contact> FindContacts(List<Contact> contacts, string contactName)
+        public ObservableCollection<Contact> FindContacts(ObservableCollection<Contact> contacts, string contactName)
         {
             if (contactName != "")
             {
-                var selectedContact = contacts.Where(contact => contact.FullName.Contains(contactName)).ToList();
+                var selectedContact = (ObservableCollection<Contact>)contacts.Where(contact => contact.FullName.Contains(contactName));
                 return selectedContact;
             }
             else return contacts;

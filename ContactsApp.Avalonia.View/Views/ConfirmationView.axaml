@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="370" d:DesignHeight="150"
+        x:Class="ContactsApp.Avalonia.View.ConfirmationView"
+		Width="370"
+		Height="150"
+		Icon="avares://ContactsApp.Avalonia.View/Assets/Icons/ContactsApp_96x96.ico"
+        Title="Окно подтверждения"
+		CanResize="False"
+		WindowStartupLocation="CenterScreen">
+	<Grid RowDefinitions="*,Auto">
+		<TextBlock Grid.Row="0"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="16"
+				   Text="Вы уверены что хотите удалить Контакт?"/>
+		<Grid Grid.Row="1"
+			  ColumnDefinitions="*,*,*,*">
+			<Button x:Name="YesButton"
+				   Grid.Column="2"
+				   Content="Да"
+				   HorizontalAlignment="Stretch"
+				   HorizontalContentAlignment="Center"
+				   Margin="6"/>
+			<Button x:Name="NoButton"
+                    Grid.Column="3"
+                    Content="Отмена"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Margin="6"/>
+		</Grid>
+	</Grid>
+</Window>

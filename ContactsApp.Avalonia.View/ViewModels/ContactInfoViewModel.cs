@@ -11,7 +11,7 @@ using ContactsApp.Model;
 
 namespace ContactsApp.Avalonia.View.ViewModels
 {
-    public class ContactInfoViewModel:ViewModelBase
+    public class ContactInfoViewModel: ViewModelBase
     {
 
     }

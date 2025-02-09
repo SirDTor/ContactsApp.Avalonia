@@ -4,43 +4,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="420"
-        x:Class="ContactsApp.Avalonia.View.Views.AddContactView"
+        x:Class="ContactsApp.Avalonia.View.Views.EditContactView"
 		Width="400"
 		Height="525"
-		Title="Добавить контакт"
+		Title="Изменить контакт"
 		Icon="avares://ContactsApp.Avalonia.View/Assets/Icons/ContactsApp_96x96.ico"
 		CanResize="False"
 		WindowStartupLocation="CenterOwner">
 	<Grid RowDefinitions="Auto,Auto">
-		<StackPanel Grid.Row="0">
+		<StackPanel	Grid.Row="0">
 			<Button Classes="AddImage"
-					Margin="6"
-					x:DataType="vm:AddContactViewModel"
-					Command="{Binding OpenContactImageCommand}">
+					x:DataType="vm:EditContactViewModel"
+					Command="{Binding OpenContactImageCommand}"
+					Margin="6">
 				<Image Classes="AddContactImage"
-					   x:DataType="vm:AddContactViewModel"
+					   x:DataType="vm:EditContactViewModel"
 					   Source="{Binding ContactImage}"
 					   Stretch="UniformToFill"/>
 			</Button>
 			<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
-			<TextBox x:DataType="vm:AddContactViewModel"
+			<TextBox x:DataType="vm:EditContactViewModel"
 					 Text="{Binding FullName}"
 					 Classes="AddContactView"/>
 			<TextBlock Classes="ContactInfo" Text="E-mail:"/>
-			<TextBox x:DataType="vm:AddContactViewModel"
+			<TextBox x:DataType="vm:EditContactViewModel"
 					 Text="{Binding Email}"
 					 Classes="AddContactView"/>
 			<TextBlock Classes="ContactInfo" Text="Номер телефона"/>
-			<TextBox x:DataType="vm:AddContactViewModel"
+			<TextBox x:DataType="vm:EditContactViewModel"
 					 Text="{Binding Phone}"
 					 Classes="AddContactView"/>
 			<TextBlock Classes="ContactInfo" Text="Дата рождения"/>
-			<DatePicker x:DataType="vm:AddContactViewModel"
+			<DatePicker x:DataType="vm:EditContactViewModel"
 						SelectedDate="{Binding DateOfBirth}"
 						Margin="6"
 						BorderThickness="1"/>
 			<TextBlock Classes="ContactInfo" Text="ВК:"/>
-			<TextBox x:DataType="vm:AddContactViewModel"
+			<TextBox x:DataType="vm:EditContactViewModel"
 					 Text="{Binding IdVk}"
 					 Classes="AddContactView"/>
 		</StackPanel>
@@ -48,14 +48,14 @@
 			  ColumnDefinitions="*,*"
 			  Margin="6,0,6,0">
 			<Button Grid.Column="0"
-					x:Name="AddContactButton"
-					x:DataType="vm:AddContactViewModel"
+					x:Name="EditContactButton"
+					x:DataType="vm:EditContactViewModel"
 					HorizontalAlignment="Stretch"
 					HorizontalContentAlignment="Center"
 					Content="Добавить"/>
 			<Button Grid.Column="1"
-					x:Name="CancelButton"
-					Click="CancelButton_Click"
+					x:Name="CancelEditButton"
+					Click="CancelEditButton_Click"
 					HorizontalAlignment="Stretch"
 					HorizontalContentAlignment="Center"
 					Content="Отмена"/>

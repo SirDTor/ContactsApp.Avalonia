@@ -75,7 +75,7 @@ namespace ContactsApp.Model
                 {
                     if (reader != null)
                     {
-                        project = (Project)serializer.Deserialize(reader,typeof(Project));
+                        project = (Project)serializer.Deserialize(reader,typeof(Project));                        
                     }
                     else 
                     { 

@@ -6,42 +6,40 @@
 			 xmlns:m="using:ContactsApp.Model"
 			 xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
              x:Class="ContactsApp.Avalonia.View.Views.ContactInfoView">
-	<Grid ColumnDefinitions="Auto,*">
+	<StackPanel Grid.Column="1">
 		<Border Grid.Column="0"
-				Classes="Image"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Top">
-			<Image Classes="ContactImage" x:DataType="vm:MainViewModel" 
+			Classes="Image"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Top">
+			<Image Classes="ContactImage" x:DataType="vm:MainViewModel"
 				   Source="{Binding CurrentContact.ContactImage}"/>
 		</Border>
-		<StackPanel Grid.Column="1">
-			<Grid RowDefinitions="*,*,*,*,*">
-				<StackPanel Grid.Row="0">
-					<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
-					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.FullName}"
-							 IsReadOnly="True"/>
-				</StackPanel>
-				<StackPanel Grid.Row="1">
-					<TextBlock Classes="ContactInfo" Text="E-mail:"/>
-					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Email}"
-							 IsReadOnly="True"/>
-				</StackPanel>
-				<StackPanel Grid.Row="2">
-					<TextBlock Classes="ContactInfo" Text="Номер телефона:"/>
-					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Phone}"
-							 IsReadOnly="True"/>
-				</StackPanel>
-				<StackPanel Grid.Row="3">
-					<TextBlock Classes="ContactInfo" Text="Дата рождения:"/>
-					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.DateOfBirth}"
-							 IsReadOnly="True"/>
-				</StackPanel>
-				<StackPanel Grid.Row="4">
-					<TextBlock Classes="ContactInfo" Text="ВК:"/>
-					<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.IdVk}"
-							 IsReadOnly="True"/>
-				</StackPanel>
-			</Grid>
-		</StackPanel>
-	</Grid>
+		<Grid RowDefinitions="*,*,*,*,*">
+			<StackPanel Grid.Row="0">
+				<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
+				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.FullName}"
+						 IsReadOnly="True"/>
+			</StackPanel>
+			<StackPanel Grid.Row="1">
+				<TextBlock Classes="ContactInfo" Text="E-mail:"/>
+				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Email}"
+						 IsReadOnly="True"/>
+			</StackPanel>
+			<StackPanel Grid.Row="2">
+				<TextBlock Classes="ContactInfo" Text="Номер телефона:"/>
+				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.Phone}"
+						 IsReadOnly="True"/>
+			</StackPanel>
+			<StackPanel Grid.Row="3">
+				<TextBlock Classes="ContactInfo" Text="Дата рождения:"/>
+				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.DateOfBirth}"
+						 IsReadOnly="True"/>
+			</StackPanel>
+			<StackPanel Grid.Row="4">
+				<TextBlock Classes="ContactInfo" Text="ВК:"/>
+				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.IdVk}"
+						 IsReadOnly="True"/>
+			</StackPanel>
+		</Grid>
+	</StackPanel>
 </UserControl>

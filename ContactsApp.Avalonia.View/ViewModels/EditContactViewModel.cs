@@ -1,41 +1,39 @@
-﻿using ContactsApp.Model;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
-using DynamicData;
-using ReactiveUI.Fody.Helpers;
+using ContactsApp.Model;
 using ReactiveUI;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using ReactiveUI.Fody.Helpers;
 using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
-using System.Reactive.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using System.IO;
-using Avalonia;
+using System.Linq;
+using System.Numerics;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ContactsApp.Avalonia.View.ViewModels
 {
-    public class AddContactViewModel : ContactViewModel
+    public class EditContactViewModel : ContactViewModel
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public AddContactViewModel()
+        public EditContactViewModel(Contact contact)
         {
-            var canAddContact = this.WhenAnyValue(x => x.FullName, x => x.Phone,
-                (fullname, phone) =>
-                !string.IsNullOrWhiteSpace(fullname) &&
-                !string.IsNullOrWhiteSpace(phone))
-                .DistinctUntilChanged();
-            
-            AddContactCommand = ReactiveCommand.Create(() =>
+            FullName = contact.FullName;
+            Email = contact.Email;
+            Phone = contact.Phone;
+            DateOfBirth = new DateTimeOffset(contact.DateOfBirth, new TimeOnly(0), new TimeSpan(0));
+            IdVk = contact.IdVk;
+            ContactImage = contact.ContactImage;
+
+
+            var canEditContact = this.WhenAnyValue(x => x.FullName, x => x.Phone,
+               (fullname, phone) =>
+               !string.IsNullOrWhiteSpace(fullname) &&
+               !string.IsNullOrWhiteSpace(phone))
+               .DistinctUntilChanged();
+
+            EditContactCommand = ReactiveCommand.Create(() =>
             {
                 Contact.FullName = FullName;
                 Contact.Email = Email;
@@ -45,7 +43,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
                 Contact.ContactImage = ContactImage;
                 Contact.ContactImageByte = ContactImageByte;
                 return Contact;
-            }, canAddContact);
+            }, canEditContact);
 
             OpenContactImageCommand = ReactiveCommand.Create(async () =>
             {
@@ -67,7 +65,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
         /// <summary>
         /// Команда ОК
         /// </summary>
-        public ReactiveCommand<Unit, Contact> AddContactCommand { get; }
+        public ReactiveCommand<Unit, Contact> EditContactCommand { get; }
 
         /// <summary>
         /// 
@@ -83,6 +81,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
         /// 
         /// </summary>
         [Reactive]
-        public IStorageFile ImagePath { get; set; }       
+        public IStorageFile ImagePath { get; set; }
+
     }
 }

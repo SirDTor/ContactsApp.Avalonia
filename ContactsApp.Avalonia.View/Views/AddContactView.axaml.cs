@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.ReactiveUI;
@@ -19,6 +20,8 @@ namespace ContactsApp.Avalonia.View.Views
             InitializeComponent();
             this.WhenActivated(d => d(ViewModel.AddContactCommand.Subscribe(Close)));
             this.BindCommand(this.ViewModel, vm => vm.AddContactCommand, v => v.AddContactButton);
+
+            HotKeyManager.SetHotKey(CancelButton, new KeyGesture(Key.Escape, KeyModifiers.None));
         }
 
         private void CancelButton_Click(object? sender, RoutedEventArgs e)

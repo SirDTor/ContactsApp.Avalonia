@@ -23,7 +23,13 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
             d(ViewModel.ShowDialog.RegisterHandler(i => ShowDialog(i, new AboutView()))));
 
         this.WhenActivated(d =>
-            d(ViewModel.AddContactWindow.RegisterHandler(i => AddNewContact(i, new AddContactView()))));
+            d(ViewModel.AddContactWindow.RegisterHandler(i => ContactWork(i, new AddContactView()))));
+
+        this.WhenActivated(d =>
+            d(ViewModel.EditContactWindow.RegisterHandler(i => ContactWork(i, new EditContactView()))));
+
+        this.WhenActivated(d =>
+            d(ViewModel.ConfirmationWindow.RegisterHandler(i => ShowDialog(i, new ConfirmationView()))));
     }
 
     /// <summary>
@@ -42,7 +48,7 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
         interaction.SetOutput(result);
     }
 
-    private async Task AddNewContact<TViewModel, T>(IInteractionContext<TViewModel, T> interaction, ReactiveWindow<TViewModel> dialog) where TViewModel : class
+    private async Task ContactWork<TViewModel, T>(IInteractionContext<TViewModel, T> interaction, ReactiveWindow<TViewModel> dialog) where TViewModel : class
     {
         dialog.DataContext = interaction.Input;
         var result = await dialog.ShowDialog<T>(this);
