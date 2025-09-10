@@ -14,13 +14,16 @@
 	<Grid RowDefinitions="Auto,Auto">
 		<StackPanel Grid.Row="0">
 			<Button Classes="AddImage"
-					Margin="6"
 					x:DataType="vm:AddContactViewModel"
-					Command="{Binding OpenContactImageCommand}">
-				<Image Classes="AddContactImage"
+					Command="{Binding OpenContactImageCommand}"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top">
+				<Border Classes ="Image">
+					<Image Classes="AddContactImage"
 					   x:DataType="vm:AddContactViewModel"
-					   Source="{Binding ContactImage}"
-					   Stretch="UniformToFill"/>
+					   Source="{Binding ContactImage}"/>
+				</Border>
+
 			</Button>
 			<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
 			<TextBox x:DataType="vm:AddContactViewModel"

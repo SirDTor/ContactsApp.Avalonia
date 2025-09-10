@@ -1,4 +1,4 @@
-﻿using ReactiveUI.Fody.Helpers;
+﻿using ReactiveUI.SourceGenerators;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;

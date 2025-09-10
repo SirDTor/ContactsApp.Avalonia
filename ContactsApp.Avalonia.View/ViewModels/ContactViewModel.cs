@@ -1,219 +1,140 @@
 ﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
-using ReactiveUI.Fody.Helpers;
+using ReactiveUI;
+using ReactiveUI.SourceGenerators;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ReactiveUI;
 using Avalonia.Controls.ApplicationLifetimes;
 using System.IO;
 using Avalonia;
 
 namespace ContactsApp.Avalonia.View.ViewModels
 {
-    public class ContactViewModel : ViewModelBase
+    public partial class ContactViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Возвращает или задает полное имя контакта
-        /// </summary>
-        /// <summary>
-        /// Полное имя контакта
-        /// </summary>
-        private string _fullName;
+        #region Constants
 
-        /// <summary>
-        /// Email контакта
-        /// </summary>
-        private string _email;
+        private const string PhoneNumberValidationMask =
+            @"^(\+7|7|8)\s*\(?\d{3}\)?\s*\d{3}[- ]?\d{2}[- ]?\d{2}$";
 
-        /// <summary>
-        /// Номер телефона контакта
-        /// </summary>
-        private string _phone;
+        #endregion
 
-        /// <summary>
-        /// Дата рождения контакта
-        /// </summary>
+        #region Private fields
+
+        private string _fullName = string.Empty;
+        private string _email = string.Empty;
+        private string _phone = string.Empty;
         private DateTimeOffset _dateOfBirth = new(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        private string _idVk = string.Empty;
+        private Bitmap? _contactImage;
 
-        /// <summary>
-        /// ID ВКонтакте контакта
-        /// </summary>
-        private string _idVk;
+        [Reactive]
+        private byte[] _contactImageByte = Array.Empty<byte>();
 
-        /// <summary>
-        /// Регулярное выражение для номера телефона
-        /// Пример: +7(000)000-00-00
-        /// </summary>
-        private const string _phoneNumberValidationMask =
-                    @"^((\+7|7|8)[[\(]?(\d{3})[\)]?]?\d{3}[[-]?(\d{2}[-]?]?\d{2}))$";
+        #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private IStorageFile _imagePath;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Bitmap _contactImage;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private byte[] _contactImageByte = [];
-
+        #region Properties with validation
 
         [MaxLength(100)]
         [Required]
-        /// <summary>
-        /// Возвращает или задает полное имя контакта
-        /// </summary>
         public string FullName
         {
-            get
-            {
-                return _fullName;
-            }
+            get => _fullName;
             set
             {
-                TextInfo toUpperTextInfo = CultureInfo.CurrentCulture.TextInfo;
-                this.RaiseAndSetIfChanged(ref _fullName, toUpperTextInfo.ToTitleCase(value).ToString());
+                if (value is null) throw new ArgumentNullException(nameof(FullName));
+                var textInfo = CultureInfo.CurrentCulture.TextInfo;
+                this.RaiseAndSetIfChanged(ref _fullName, textInfo.ToTitleCase(value));
             }
         }
 
         [EmailAddress]
-        /// <summary>
-        /// Возвращает или задает email контакта
-        /// </summary>
         public string Email
         {
-            get
-            {
-                return _email;
-            }
+            get => _email;
             set
             {
+                if (value is null) throw new ArgumentNullException(nameof(Email));
                 this.RaiseAndSetIfChanged(ref _email, value);
             }
         }
 
         [Phone]
         [Required]
-        /// <summary>
-        /// Возвращает или задает номер телефона контакта
-        /// </summary>
         public string Phone
         {
-            get
-            {
-                return _phone;
-            }
+            get => _phone;
             set
             {
-                if (!Regex.IsMatch(value, _phoneNumberValidationMask))
+                if (!Regex.IsMatch(value, PhoneNumberValidationMask))
                 {
-                    throw new ArgumentException($"PhoneNumber:\n->The phone number contains an" +
-                        $" invalid character.\nExample:\n" +
-                        $"8(923)442-79-25\n" +
-                        $"89234427925\n");
+                    throw new ArgumentException(
+                        "PhoneNumber:\n->Invalid format.\nExamples:\n" +
+                        "8(923)442-79-25\n89234427925\n+7(923)442-79-25\n");
                 }
                 this.RaiseAndSetIfChanged(ref _phone, value);
             }
         }
 
         [Required]
-        /// <summary>
-        /// Возвращает или задает дату рождения контакта
-        /// </summary>
         public DateTimeOffset DateOfBirth
         {
-            get
-            {
-                return _dateOfBirth;
-            }
+            get => _dateOfBirth;
             set
             {
                 if (value.Year <= 1900 || value > DateTimeOffset.Now)
                 {
-                    throw new ArgumentException($"Date:\n->Year must be less or more than " +
-                        $"current year But was {value.Year}\n");
+                    throw new ArgumentException(
+                        $"Date:\n->Year must be > 1900 and not in the future. But was {value:yyyy-MM-dd}\n");
                 }
                 this.RaiseAndSetIfChanged(ref _dateOfBirth, value);
-
             }
         }
 
         [MaxLength(50)]
-        /// <summary>
-        /// Возвращает или задает ID ВКонтакте контакта
-        /// </summary>
         public string IdVk
         {
-            get
-            {
-                return _idVk;
-            }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _idVk, value);
-            }
+            get => _idVk;
+            set => this.RaiseAndSetIfChanged(ref _idVk, value);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Reactive]
-        public byte[] ContactImageByte { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Bitmap ContactImage
+        public Bitmap? ContactImage
         {
             get => _contactImage;
             set => this.RaiseAndSetIfChanged(ref _contactImage, value);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NullReferenceException"></exception>
-        public async Task<IStorageFile> GetPath()
+        #endregion
+
+        #region Methods
+
+        public async Task<IStorageFile?> GetPath()
         {
             if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
-            desktop.MainWindow?.StorageProvider is not { } provider)
+                desktop.MainWindow?.StorageProvider is not { } provider)
                 throw new NullReferenceException("Missing StorageProvider instance.");
-            // Start async operation to open the dialog.
+
             var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 Title = "Open Contact Image",
                 AllowMultiple = false,
-                FileTypeFilter = new FilePickerFileType[]
+                FileTypeFilter = new[]
                 {
-                    new("Image")
+                    new FilePickerFileType("Image")
                     {
                         Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp" },
-                        AppleUniformTypeIdentifiers = new[] { "public.image" } ,
+                        AppleUniformTypeIdentifiers = new[] { "public.image" },
                         MimeTypes = new[] { "image/*" }
                     }
                 }
             });
-            if (files.Count >= 1)
-            {
-                // Open reading stream from the first file.
-                await using var stream = await files[0].OpenReadAsync();
-                using var streamReader = new StreamReader(stream);
-                // Reads all the content of file as a text.
-                var fileContent = await streamReader.ReadToEndAsync();
-            }
+
             return files?.Count >= 1 ? files[0] : null;
         }
+
+        #endregion
     }
 }

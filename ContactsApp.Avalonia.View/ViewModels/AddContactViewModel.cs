@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using DynamicData;
-using ReactiveUI.Fody.Helpers;
+using ReactiveUI.SourceGenerators;
 using ReactiveUI;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

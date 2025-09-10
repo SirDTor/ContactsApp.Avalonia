@@ -2,7 +2,7 @@
 using Avalonia.Platform.Storage;
 using ContactsApp.Model;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
+using ReactiveUI.SourceGenerators;
 using System;
 using System.Collections.Generic;
 using System.IO;

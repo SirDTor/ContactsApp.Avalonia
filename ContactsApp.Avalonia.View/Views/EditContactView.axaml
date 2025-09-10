@@ -16,11 +16,13 @@
 			<Button Classes="AddImage"
 					x:DataType="vm:EditContactViewModel"
 					Command="{Binding OpenContactImageCommand}"
-					Margin="6">
-				<Image Classes="AddContactImage"
-					   x:DataType="vm:EditContactViewModel"
-					   Source="{Binding ContactImage}"
-					   Stretch="UniformToFill"/>
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top">
+				<Border Classes ="Image">
+					<Image Classes="AddContactImage"
+							x:DataType="vm:EditContactViewModel"
+							Source="{Binding ContactImage}"/>
+				</Border>
 			</Button>
 			<TextBlock Classes="ContactInfo" Text="Полное имя:"/>
 			<TextBox x:DataType="vm:EditContactViewModel"

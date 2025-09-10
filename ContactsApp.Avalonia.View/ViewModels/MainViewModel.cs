@@ -1,6 +1,6 @@
 ﻿using ContactsApp.Model;
 using DynamicData;
-using ReactiveUI.Fody.Helpers;
+using ReactiveUI.SourceGenerators;
 using ReactiveUI;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -197,8 +197,8 @@ public class MainViewModel : ViewModelBase
         else
         {
             CurrentContact.FullName = "";
-            CurrentContact.Email = "";
-            CurrentContact.Phone = "";
+            CurrentContact.Email = "test@mail.ru";
+            CurrentContact.Phone = "+7(999)999-99-99";
             CurrentContact.DateOfBirth = DateOnly.FromDateTime(new DateTime(2000, 1, 1));
             CurrentContact.IdVk = "";
             CurrentContact.ContactImage = null;
