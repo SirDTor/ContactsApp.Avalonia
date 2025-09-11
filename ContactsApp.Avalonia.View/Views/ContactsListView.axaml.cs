@@ -17,5 +17,13 @@ public partial class ContactsListView : ReactiveUserControl<MainViewModel>
     public ContactsListView()
     {
         InitializeComponent();
+
+        var addContact = this.FindControl<Button>("AddContactButton");
+        var editContact = this.FindControl<Button>("EditContactButton");
+        var deleteContact = this.FindControl<Button>("DeleteContactButton");
+
+        HotKeyManager.SetHotKey(addContact, new KeyGesture(Key.I, KeyModifiers.Control));
+        HotKeyManager.SetHotKey(editContact, new KeyGesture(Key.F2, KeyModifiers.None));
+        HotKeyManager.SetHotKey(deleteContact, new KeyGesture(Key.Delete, KeyModifiers.None));
     }
 }

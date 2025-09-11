@@ -15,24 +15,36 @@
 	<StackPanel>
 		<Grid x:Name="ContactsListGrid" RowDefinitions="Auto,*,Auto"
 			  MaxHeight="{Binding $parent.Bounds.Height}"
-			  Height="{Binding $parent.Bounds.Height}">
-			<TextBox Grid.Row="0" Watermark="Поиск..."/>
+			  Height="{Binding $parent.Bounds.Height}">				
+			<TextBox Grid.Row="0" Text="{Binding SearchContactText}" Watermark="Поиск..."/>
 			<Panel Grid.Row="1" Margin="6">
 				<ListBox
-					 x:Name="ContactsList"
-					 Height="{Binding $parent.Bounds.Height}"
-					 x:DataType="vm:MainViewModel"
-					 ItemsSource="{Binding Contacts}"
-					 SelectedItem="{Binding SelectedContact}"
-					 SelectedIndex="{Binding SelectedIndexContact}"
-					 SelectionMode="Single"
-					 ScrollViewer.VerticalScrollBarVisibility="Auto"
-					 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+						x:Name="ContactsList"
+						Height="{Binding $parent.Bounds.Height}"
+						x:DataType="vm:MainViewModel"
+						ItemsSource="{Binding Contacts}"
+						SelectedItem="{Binding SelectedContact}"
+						SelectedIndex="{Binding SelectedIndexContact}"
+						SelectionMode="Single"
+						ScrollViewer.VerticalScrollBarVisibility="Auto"
+						ScrollViewer.HorizontalScrollBarVisibility="Auto">
+
 					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock x:DataType="m:Contact" Text="{Binding FullName}"/>
+						<DataTemplate x:DataType="m:Contact">
+							<TextBlock Text="{Binding FullName}" />
 						</DataTemplate>
 					</ListBox.ItemTemplate>
+
+					<ListBox.Styles>
+						<Style Selector="ListBoxItem">
+							<Setter Property="ContextMenu">
+								<ContextMenu>
+									<MenuItem Header="Экспортировать контакт"
+											  Command="{Binding DataContext.ExportContactCommand, ElementName=ContactsList}"/>
+								</ContextMenu>
+							</Setter>
+						</Style>
+					</ListBox.Styles>
 				</ListBox>
 			</Panel>
 			<Grid Grid.Row="2"
@@ -50,7 +62,7 @@
 					</Panel>
 				</Button>
 				<Button Grid.Column="1"
-						x:Name="EditButton"
+						x:Name="EditContactButton"
 						Classes="ImageCommand"
 						Content="EditContacts"
 						Command="{Binding EditContactCommand}">
@@ -60,6 +72,7 @@
 					</Panel>
 				</Button>
 				<Button Grid.Column="2"
+						x:Name="DeleteContactButton"
 						Classes="ImageCommand"
 						Command="{Binding DeleteContactCommand}"
 						Content="Test">

@@ -119,5 +119,29 @@
 		<Setter Property="ClipToBounds" Value="True"/>
 		<Setter Property="Stretch" Value="UniformToFill"/>
 	</Style>
-	
+
+	<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="ToggleButton:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="ToggleButton">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="ToggleButton PathIcon.dark">
+		<Setter Property="IsVisible" Value="False"/>
+	</Style>
+	<Style Selector="ToggleButton:checked PathIcon.dark">
+		<Setter Property="IsVisible" Value="True"/>		
+	</Style>
+	<Style Selector="ToggleButton PathIcon.light">
+		<Setter Property="IsVisible" Value="True"/>
+	</Style>
+	<Style Selector="ToggleButton:checked PathIcon.light">
+		<Setter Property="IsVisible" Value="False"/>
+	</Style>
 </Styles>

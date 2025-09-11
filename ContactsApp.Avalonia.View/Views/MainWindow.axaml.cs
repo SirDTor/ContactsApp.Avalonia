@@ -13,21 +13,17 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
     {
         InitializeComponent();
 
-        var aboutWindow = this.FindControl<Button>("AboutWindowButton");
+        var aboutWindow = this.FindControl<Button>("AboutWindowButton");        
 
-        HotKeyManager.SetHotKey(aboutWindow, new KeyGesture(Key.F1, KeyModifiers.None));
+        HotKeyManager.SetHotKey(aboutWindow, new KeyGesture(Key.F1, KeyModifiers.None));        
 
         this.BindCommand(this.ViewModel, vm => vm.AboutCommand, v => v.AboutWindowButton);
-
         this.WhenActivated(d =>
             d(ViewModel.ShowDialog.RegisterHandler(i => ShowDialog(i, new AboutView()))));
-
         this.WhenActivated(d =>
             d(ViewModel.AddContactWindow.RegisterHandler(i => ContactWork(i, new AddContactView()))));
-
         this.WhenActivated(d =>
             d(ViewModel.EditContactWindow.RegisterHandler(i => ContactWork(i, new EditContactView()))));
-
         this.WhenActivated(d =>
             d(ViewModel.ConfirmationWindow.RegisterHandler(i => ShowDialog(i, new ConfirmationView()))));
     }

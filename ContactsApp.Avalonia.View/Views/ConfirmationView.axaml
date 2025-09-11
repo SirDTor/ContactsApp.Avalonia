@@ -20,6 +20,7 @@
 		<Grid Grid.Row="1"
 			  ColumnDefinitions="*,*,*,*">
 			<Button x:Name="YesButton"
+					Focusable="True"
 				   Grid.Column="2"
 				   Content="Да"
 				   HorizontalAlignment="Stretch"

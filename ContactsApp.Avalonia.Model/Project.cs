@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using DynamicData.Binding;
+using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace ContactsApp.Model
     /// </summary>
     public class Project : ReactiveObject
     {
+        private bool _isSorting = false;
+
         [DataMember]
         /// <summary>
         /// Возвращает или задает список контактов
@@ -25,13 +28,24 @@ namespace ContactsApp.Model
         /// <summary>
         /// Возвращает отсортированный список контактов
         /// </summary>
-        /// <param name="contacts"></param>
-        /// <returns></returns>
-        public void SortContactsByFullName(ObservableCollection<Contact> contacts)
+        public void SortContactsByFullName()
         {
-            var orderByContact =new ObservableCollection<Contact>(contacts.OrderBy(contact => contact.FullName));
-            Contacts = orderByContact;
-            //return orderByContact;
+            if (_isSorting || Contacts == null || Contacts.Count == 0) return;
+
+            _isSorting = true;
+            try
+            {
+                var sortedContacts = Contacts.OrderBy(c => c.FullName).ToList();
+                Contacts.Clear();
+                foreach (var contact in sortedContacts)
+                {
+                    Contacts.Add(contact);
+                }
+            }
+            finally
+            {
+                _isSorting = false;
+            }
         }
 
         /// <summary>

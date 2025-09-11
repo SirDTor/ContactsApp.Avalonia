@@ -6,13 +6,25 @@
 			 xmlns:m="using:ContactsApp.Model"
 			 xmlns:vm="using:ContactsApp.Avalonia.View.ViewModels"
              x:Class="ContactsApp.Avalonia.View.Views.ContactInfoView">
-	<StackPanel Grid.Column="1">
-		<Border Grid.Column="0"
-			Classes="Image"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Top">
-			<Image Classes="ContactImage" x:DataType="vm:MainViewModel"
-				   Source="{Binding CurrentContact.ContactImage}"/>
+	<StackPanel>
+		<ToggleButton x:DataType="vm:MainViewModel"
+					  Classes="transparent-toggle"
+					  Content="Тема"
+					  IsChecked="{Binding IsDark, Mode=TwoWay}"
+					  HorizontalAlignment="Right"
+					  Margin="6">
+			<Panel>
+				<PathIcon Classes="dark"
+						  Data="{StaticResource moon_icon}" />
+				<PathIcon Classes="light"
+						  Data="{StaticResource sun_icon}" />
+			</Panel>
+		</ToggleButton>
+		<Border Classes="Image"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Top">
+				<Image Classes="ContactImage" x:DataType="vm:MainViewModel"
+						Source="{Binding CurrentContact.ContactImage}"/>
 		</Border>
 		<Grid RowDefinitions="*,*,*,*,*">
 			<StackPanel Grid.Row="0">
@@ -39,7 +51,7 @@
 				<TextBlock Classes="ContactInfo" Text="ВК:"/>
 				<TextBox x:DataType="vm:MainViewModel" Text="{Binding CurrentContact.IdVk}"
 						 IsReadOnly="True"/>
-			</StackPanel>
-		</Grid>
+			</StackPanel>			
+		</Grid>		
 	</StackPanel>
 </UserControl>

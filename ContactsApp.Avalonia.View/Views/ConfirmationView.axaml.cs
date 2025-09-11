@@ -30,6 +30,10 @@ namespace ContactsApp.Avalonia.View
                              .DisposeWith(disposables);
                 }
             });
+
+            Observable.Timer(TimeSpan.FromMilliseconds(50))
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => YesButton.Focus());
         }
     }
 }
