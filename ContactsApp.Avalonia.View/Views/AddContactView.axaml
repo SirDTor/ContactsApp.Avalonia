@@ -39,7 +39,7 @@
 					 Classes="AddContactView"/>
 			<TextBlock Classes="ContactInfo" Text="Дата рождения"/>
 			<DatePicker x:DataType="vm:AddContactViewModel"
-						SelectedDate="{Binding DateOfBirth}"
+						SelectedDate="{Binding DateOfBirthOffset}"
 						Margin="6"
 						BorderThickness="1"/>
 			<TextBlock Classes="ContactInfo" Text="ВК:"/>

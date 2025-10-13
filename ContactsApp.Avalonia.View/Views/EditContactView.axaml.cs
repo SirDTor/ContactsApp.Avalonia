@@ -5,6 +5,7 @@ using Avalonia.ReactiveUI;
 using ContactsApp.Avalonia.View.ViewModels;
 using ReactiveUI;
 using System;
+using System.Reactive.Disposables;
 
 namespace ContactsApp.Avalonia.View.Views
 {
@@ -13,9 +14,17 @@ namespace ContactsApp.Avalonia.View.Views
         public EditContactView()
         {
             InitializeComponent();
-            this.WhenActivated(d => d(ViewModel.EditContactCommand.Subscribe(Close)));
-            this.BindCommand(this.ViewModel, vm => vm.EditContactCommand, v => v.EditContactButton);           
+            this.WhenActivated(disposables =>
+            {
+                this.BindCommand(ViewModel, vm => vm.EditContactCommand, v => v.EditContactButton)
+                    .DisposeWith(disposables);
 
+                ViewModel!.EditContactCommand.Subscribe(result =>
+                {
+                    if (result != null)
+                        Close(result);
+                }).DisposeWith(disposables);
+            });  
             HotKeyManager.SetHotKey(CancelEditButton, new KeyGesture(Key.Escape, KeyModifiers.None));
         }
 

@@ -20,7 +20,7 @@
 					VerticalAlignment="Top">
 				<Border Classes ="Image">
 					<Image Classes="AddContactImage"
-							x:DataType="vm:EditContactViewModel"
+							x:DataType="vm:ContactViewModel"
 							Source="{Binding ContactImage}"/>
 				</Border>
 			</Button>
@@ -38,7 +38,7 @@
 					 Classes="AddContactView"/>
 			<TextBlock Classes="ContactInfo" Text="Дата рождения"/>
 			<DatePicker x:DataType="vm:EditContactViewModel"
-						SelectedDate="{Binding DateOfBirth}"
+						SelectedDate="{Binding DateOfBirthOffset}"
 						Margin="6"
 						BorderThickness="1"/>
 			<TextBlock Classes="ContactInfo" Text="ВК:"/>
@@ -51,7 +51,6 @@
 			  Margin="6,0,6,0">
 			<Button Grid.Column="0"
 					x:Name="EditContactButton"
-					x:DataType="vm:EditContactViewModel"
 					HorizontalAlignment="Stretch"
 					HorizontalContentAlignment="Center"
 					Content="Добавить"/>

@@ -22,7 +22,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
             FullName = contact.FullName;
             Email = contact.Email;
             Phone = contact.Phone;
-            DateOfBirth = new DateTimeOffset(contact.DateOfBirth, new TimeOnly(0), new TimeSpan(0));
+            DateOfBirthOffset = new DateTimeOffset(contact.DateOfBirth, new TimeOnly(0), new TimeSpan(0));
             IdVk = contact.IdVk;
             ContactImage = contact.ContactImage;
 
@@ -38,7 +38,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
                 Contact.FullName = FullName;
                 Contact.Email = Email;
                 Contact.Phone = Phone;
-                Contact.DateOfBirth = new DateOnly(DateOfBirth.Year, DateOfBirth.Month, DateOfBirth.Day);
+                Contact.DateOfBirth = new DateOnly(DateOfBirthOffset.Value.Year, DateOfBirthOffset.Value.Month, DateOfBirthOffset.Value.Day);
                 Contact.IdVk = IdVk;
                 Contact.ContactImage = ContactImage;
                 Contact.ContactImageByte = ContactImageByte;

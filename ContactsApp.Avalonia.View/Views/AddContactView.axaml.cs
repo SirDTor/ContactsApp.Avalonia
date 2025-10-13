@@ -9,6 +9,7 @@ using ReactiveUI;
 using System;
 using System.IO;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Threading.Tasks;
 
 namespace ContactsApp.Avalonia.View.Views
@@ -18,8 +19,15 @@ namespace ContactsApp.Avalonia.View.Views
         public AddContactView()
         {
             InitializeComponent();
-            this.WhenActivated(d => d(ViewModel.AddContactCommand.Subscribe(Close)));
-            this.BindCommand(this.ViewModel, vm => vm.AddContactCommand, v => v.AddContactButton);
+            this.WhenActivated(disposables =>
+            {
+                this.BindCommand(ViewModel, vm => vm.AddContactCommand, v=>v.AddContactButton)
+                    .DisposeWith(disposables);
+                ViewModel!.AddContactCommand.Subscribe(result =>
+                {
+                    if (result != null) Close(result);
+                }).DisposeWith(disposables);
+            });
 
             HotKeyManager.SetHotKey(CancelButton, new KeyGesture(Key.Escape, KeyModifiers.None));
         }

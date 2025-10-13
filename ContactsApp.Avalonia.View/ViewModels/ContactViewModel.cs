@@ -1,115 +1,130 @@
 ﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using ContactsApp.Model;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text.RegularExpressions;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls.ApplicationLifetimes;
-using System.IO;
 using Avalonia;
 
 namespace ContactsApp.Avalonia.View.ViewModels
 {
-    public partial class ContactViewModel : ViewModelBase
+    public class ContactViewModel : ViewModelBase
     {
-        #region Constants
+        #region Constructor and Model
 
-        private const string PhoneNumberValidationMask =
-            @"^(\+7|7|8)\s*\(?\d{3}\)?\s*\d{3}[- ]?\d{2}[- ]?\d{2}$";
+        public ContactViewModel(Contact contact)
+        {
+            Contact = contact ?? throw new ArgumentNullException(nameof(contact));
+        }
 
-        #endregion
+        public ContactViewModel() : this(new Contact()) { }
 
-        #region Private fields
-
-        private string _fullName = string.Empty;
-        private string _email = string.Empty;
-        private string _phone = string.Empty;
-        private DateTimeOffset _dateOfBirth = new(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
-        private string _idVk = string.Empty;
-        private Bitmap? _contactImage;
-
-        [Reactive]
-        private byte[] _contactImageByte = Array.Empty<byte>();
+        public Contact Contact { get; }
 
         #endregion
 
-        #region Properties with validation
+        #region Properties (Proxies for Model)
 
-        [MaxLength(100)]
-        [Required]
         public string FullName
         {
-            get => _fullName;
+            get => Contact.FullName;
             set
             {
-                if (value is null) throw new ArgumentNullException(nameof(FullName));
-                var textInfo = CultureInfo.CurrentCulture.TextInfo;
-                this.RaiseAndSetIfChanged(ref _fullName, textInfo.ToTitleCase(value));
+                if (Contact.FullName != value) 
+                {
+                    Contact.FullName = value;
+                    this.RaisePropertyChanged();
+                }
             }
         }
 
-        [EmailAddress]
         public string Email
         {
-            get => _email;
+            get => Contact.Email;
             set
             {
-                if (value is null) throw new ArgumentNullException(nameof(Email));
-                this.RaiseAndSetIfChanged(ref _email, value);
+                if (Contact.Email != value)
+                {
+                    Contact.Email = value;
+                    this.RaisePropertyChanged();
+                }
             }
         }
 
-        [Phone]
-        [Required]
         public string Phone
         {
-            get => _phone;
+            get => Contact.Phone;
             set
             {
-                if (!Regex.IsMatch(value, PhoneNumberValidationMask))
+                if (Contact.Phone != value)
                 {
-                    throw new ArgumentException(
-                        "PhoneNumber:\n->Invalid format.\nExamples:\n" +
-                        "8(923)442-79-25\n89234427925\n+7(923)442-79-25\n");
+                    Contact.Phone = value;
+                    this.RaisePropertyChanged();
                 }
-                this.RaiseAndSetIfChanged(ref _phone, value);
             }
         }
 
-        [Required]
-        public DateTimeOffset DateOfBirth
-        {
-            get => _dateOfBirth;
-            set
-            {
-                if (value.Year <= 1900 || value > DateTimeOffset.Now)
-                {
-                    throw new ArgumentException(
-                        $"Date:\n->Year must be > 1900 and not in the future. But was {value:yyyy-MM-dd}\n");
-                }
-                this.RaiseAndSetIfChanged(ref _dateOfBirth, value);
-            }
-        }
-
-        [MaxLength(50)]
         public string IdVk
         {
-            get => _idVk;
-            set => this.RaiseAndSetIfChanged(ref _idVk, value);
+            get => Contact.IdVk;
+            set
+            {
+                if (Contact.IdVk != value)
+                {
+                    Contact.IdVk = value;
+                    this.RaisePropertyChanged();
+                }
+            }
         }
 
         public Bitmap? ContactImage
         {
-            get => _contactImage;
-            set => this.RaiseAndSetIfChanged(ref _contactImage, value);
+            get => Contact.ContactImage;
+            set
+            {
+                if (Contact.ContactImage != value)
+                {
+                    Contact.ContactImage = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public byte[]? ContactImageByte
+        {
+            get => Contact.ContactImageByte;
+            set
+            {
+                if (Contact.ContactImageByte != value)
+                {
+                    Contact.ContactImageByte = value;
+                    this.RaisePropertyChanged();
+                }
+            }
         }
 
         #endregion
 
-        #region Methods
+        #region Date Binding Adapter
+
+        // В модели DateOnly, а Avalonia DatePicker требует DateTimeOffset? 
+        // Поэтому добавляем адаптер-свойство:
+        public DateTimeOffset? DateOfBirthOffset
+        {
+            get => new DateTimeOffset(Contact.DateOfBirth.ToDateTime(TimeOnly.MinValue));
+            set
+            {
+                if (value.HasValue)
+                    Contact.DateOfBirth = DateOnly.FromDateTime(value.Value.Date);
+            }
+        }
+
+        #endregion
+
+        #region File Picker
 
         public async Task<IStorageFile?> GetPath()
         {
@@ -123,16 +138,16 @@ namespace ContactsApp.Avalonia.View.ViewModels
                 AllowMultiple = false,
                 FileTypeFilter = new[]
                 {
-                    new FilePickerFileType("Image")
+                    new FilePickerFileType("Image files")
                     {
-                        Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp" },
+                        Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.bmp" },
                         AppleUniformTypeIdentifiers = new[] { "public.image" },
                         MimeTypes = new[] { "image/*" }
                     }
                 }
             });
 
-            return files?.Count >= 1 ? files[0] : null;
+            return files.Count > 0 ? files[0] : null;
         }
 
         #endregion

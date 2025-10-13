@@ -40,7 +40,7 @@ namespace ContactsApp.Avalonia.View.ViewModels
                 Contact.FullName = FullName;
                 Contact.Email = Email;
                 Contact.Phone = Phone;
-                Contact.DateOfBirth = new DateOnly(DateOfBirth.Year, DateOfBirth.Month, DateOfBirth.Day);
+                Contact.DateOfBirth = new DateOnly(DateOfBirthOffset.Value.Year, DateOfBirthOffset.Value.Month, DateOfBirthOffset.Value.Day);
                 Contact.IdVk = IdVk;
                 Contact.ContactImage = ContactImage;
                 Contact.ContactImageByte = ContactImageByte;

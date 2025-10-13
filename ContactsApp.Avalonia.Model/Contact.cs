@@ -114,11 +114,11 @@ namespace ContactsApp.Model
         #region Auto-generated properties
 
         [Reactive]
-        private Bitmap _contactImage;
+        private Bitmap? _contactImage;
 
         [property: DataMember] // прокинем атрибут на сгенерённое свойство
         [Reactive]
-        private byte[] _contactImageByte = Array.Empty<byte>();
+        private byte[]? _contactImageByte = Array.Empty<byte>();
 
         #endregion
 
