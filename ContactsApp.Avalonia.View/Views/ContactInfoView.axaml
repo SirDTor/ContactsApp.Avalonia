@@ -15,9 +15,10 @@
 					  Margin="6">
 			<Panel>
 				<PathIcon Classes="dark"
-						  Data="{StaticResource moon_icon}" />
+						  Data="{StaticResource moon_icon}"/>
 				<PathIcon Classes="light"
-						  Data="{StaticResource sun_icon}" />
+						  
+						  Data="{StaticResource sun_icon}"/>
 			</Panel>
 		</ToggleButton>
 		<Border Classes="Image"
