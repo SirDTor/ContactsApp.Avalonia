@@ -9,15 +9,13 @@
 	<StackPanel>
 		<ToggleButton x:DataType="vm:MainViewModel"
 					  Classes="transparent-toggle"
-					  Content="Тема"
 					  IsChecked="{Binding IsDark, Mode=TwoWay}"
 					  HorizontalAlignment="Right"
 					  Margin="6">
 			<Panel>
 				<PathIcon Classes="dark"
 						  Data="{StaticResource moon_icon}"/>
-				<PathIcon Classes="light"
-						  
+				<PathIcon Classes="light"						  
 						  Data="{StaticResource sun_icon}"/>
 			</Panel>
 		</ToggleButton>

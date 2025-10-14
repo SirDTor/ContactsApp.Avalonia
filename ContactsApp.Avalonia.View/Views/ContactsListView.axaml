@@ -1,33 +1,33 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ContactsApp.Avalonia.View.ViewModels"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ContactsApp.Avalonia.View.ViewModels"
 			 xmlns:m="using:ContactsApp.Model"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="590"
-             x:Class="ContactsApp.Avalonia.View.Views.ContactsListView"
-             x:DataType="vm:MainViewModel">
+			 mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="590"
+			 x:Class="ContactsApp.Avalonia.View.Views.ContactsListView"
+			 x:DataType="vm:MainViewModel">
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainViewModel />
 	</Design.DataContext>
 	<StackPanel>
 		<Grid x:Name="ContactsListGrid" RowDefinitions="Auto,*,Auto"
 			  MaxHeight="{Binding $parent.Bounds.Height}"
-			  Height="{Binding $parent.Bounds.Height}">				
+			  Height="{Binding $parent.Bounds.Height}">
 			<TextBox Grid.Row="0" Text="{Binding SearchContactText}" Watermark="Поиск..."/>
 			<Panel Grid.Row="1" Margin="6">
 				<ListBox
-						x:Name="ContactsList"
-						Height="{Binding $parent.Bounds.Height}"
-						x:DataType="vm:MainViewModel"
-						ItemsSource="{Binding Contacts}"
-						SelectedItem="{Binding SelectedContact}"
-						SelectedIndex="{Binding SelectedIndexContact}"
-						SelectionMode="Single"
-						ScrollViewer.VerticalScrollBarVisibility="Auto"
-						ScrollViewer.HorizontalScrollBarVisibility="Auto">
+				x:Name="ContactsList"
+				Height="{Binding $parent.Bounds.Height}"
+				x:DataType="vm:MainViewModel"
+				ItemsSource="{Binding Contacts}"
+				SelectedItem="{Binding SelectedContact}"
+				SelectedIndex="{Binding SelectedIndexContact}"
+				SelectionMode="Single"
+				ScrollViewer.VerticalScrollBarVisibility="Auto"
+				ScrollViewer.HorizontalScrollBarVisibility="Auto">
 
 					<ListBox.ItemTemplate>
 						<DataTemplate x:DataType="m:Contact">
@@ -49,44 +49,50 @@
 			</Panel>
 			<Grid Grid.Row="2"
 				  ColumnDefinitions="*,*,*,*"
-			      VerticalAlignment="Bottom"
-			      Classes="ButtonPanel">
+				  VerticalAlignment="Bottom"
+				  Classes="ButtonPanel">
 				<Button Grid.Column="0"
 						x:Name="AddContactButton"
 						Classes="ImageCommand"
-						Content="AddContact"
 						Command="{Binding AddContactCommand}">
 					<Panel>
-						<Image x:Name="AddImageGray" Classes="h1" Source="/Assets/Icons/add_contact_32x32_gray.png"/>
-						<Image x:Name="AddImage" Classes="h2" Source="/Assets/Icons/add_contact_32x32.png"/>
+						<PathIcon Height="38.5"
+								  Width="40.5"
+								  Classes="h1"
+								  Data="{StaticResource addContactIcon}"/>
 					</Panel>
 				</Button>
 				<Button Grid.Column="1"
 						x:Name="EditContactButton"
 						Classes="ImageCommand"
-						Content="EditContacts"
 						Command="{Binding EditContactCommand}">
 					<Panel>
-						<Image x:Name="EditImageGray" Classes="h1" Source="/Assets/Icons/edit_contact_32x32_gray.png"/>
-						<Image x:Name="EditImage" Classes="h2" Source="/Assets/Icons/edit_contact_32x32.png"/>
+						<PathIcon Height="41.5"
+								  Width="41.5"
+								  Classes="h1" Data="{StaticResource editContactIcon}"/>
 					</Panel>
 				</Button>
 				<Button Grid.Column="2"
 						x:Name="DeleteContactButton"
 						Classes="ImageCommand"
-						Command="{Binding DeleteContactCommand}"
-						Content="Test">
+						Command="{Binding DeleteContactCommand}">
 					<Panel>
-						<Image x:Name="DeleteImageGray" Classes="h1" Source="/Assets/Icons/remove_contact_32x32_gray.png"/>
-						<Image x:Name="DeleteImage" Classes="h2" Source="/Assets/Icons/remove_contact_32x32.png"/>
+						<PathIcon Height="38"
+								  Width="40"
+								  Classes="h1"
+								  Data="{StaticResource deleteContactIcon}"/>
 					</Panel>
 				</Button>
 				<Button Grid.Column="3"
 						x:Name="GenerateRandomContactButton"
 						Command="{Binding GenerateRandomContactsCommand}"
-						Classes="ImageCommand"
-						Content="Сгенерировать">
-					<Image Source="/Assets/Icons/add_random_contact_32x32_gray.png"/>
+						Classes="ImageCommand">
+					<Panel>
+						<PathIcon Height="58"
+								  Width="45"
+								  Classes="h1"
+								  Data="{StaticResource addRandomContactIcon}"/>
+					</Panel>
 				</Button>
 			</Grid>
 		</Grid>

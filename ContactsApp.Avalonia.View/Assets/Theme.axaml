@@ -67,26 +67,22 @@
 	<Style Selector="Button.ImageCommand">
 		<Setter Property="Height" Value="60"/>
 		<Setter Property="Width" Value="60"/>
-		<Setter Property="Padding" Value="12"/>
+		<Setter Property="Padding" Value="0"/>
 		<Setter Property="CornerRadius" Value="100"/>
 		<Setter Property="VerticalAlignment" Value="Center"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		
-		<Style Selector="^ > Panel > Image.h1">
-			<Setter Property="Stretch" Value="UniformToFill"/>
+		<Style Selector="^ > Panel">
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+
+		<Style Selector="^ > Panel > PathIcon.h1">
+			<Setter Property="Foreground" Value="#5B5B5B"/>
 		</Style>
 		
-		<Style Selector="^ > Panel > Image.h2">
-			<Setter Property="IsVisible" Value="False"/>
-			<Setter Property="Stretch" Value="UniformToFill"/>
-		</Style>
-		
-		<Style Selector="^:pointerover > Panel >Image.h1">
-			<Setter Property="IsVisible" Value="False"/>
-		</Style>
-		
-		<Style Selector="^:pointerover > Panel > Image.h2">
-			<Setter Property="IsVisible" Value="True"/>
+		<Style Selector="^:pointerover > Panel >PathIcon.h1">
+			<Setter Property="Foreground" Value="#00a1ff"/>
 		</Style>
 	</Style>
 	
